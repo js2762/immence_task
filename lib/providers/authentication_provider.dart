@@ -19,7 +19,6 @@ class AuthenticationProvider with ChangeNotifier {
   final signUpPasswordController = TextEditingController();
   bool signUpCheckBoxVal = false;
 
-
   toggleObSecureVal() {
     obSecureTextVal = !obSecureTextVal;
     notifyListeners();
@@ -35,12 +34,12 @@ class AuthenticationProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  clearLoginTextControllers(){
+  clearLoginTextControllers() {
     emailController.clear();
     passwordController.clear();
   }
 
-  clearSignUpTextControllers(){
+  clearSignUpTextControllers() {
     signUpNameController.clear();
     signUpEmailController.clear();
     signUpNumberController.clear();
@@ -49,8 +48,10 @@ class AuthenticationProvider with ChangeNotifier {
 
   Future<void> login() async {
     try {
-      await ApiService().login(email: emailController.text, password: passwordController.text);
-      clearLoginTextControllers();
+      bool isLogin = await ApiService().login(email: emailController.text, password: passwordController.text);
+      if (isLogin) {
+        clearLoginTextControllers();
+      }
     } on FirebaseAuthException catch (error) {
       print(error.code);
       if (error.code == 'user-not-found') {
@@ -70,13 +71,16 @@ class AuthenticationProvider with ChangeNotifier {
 
   Future<void> signUp() async {
     try {
-      await ApiService().signUp(
+      bool isSignUp = await ApiService().signUp(
         name: signUpNameController.text,
         email: signUpEmailController.text,
         number: signUpNumberController.text,
         password: signUpPasswordController.text,
       );
-    clearSignUpTextControllers();
+      if (isSignUp) {
+        clearSignUpTextControllers();
+      }
+      notifyListeners();
     } on FirebaseAuthException catch (error) {
       print(error.code);
       if (error.code == 'email-already-in-use') {
