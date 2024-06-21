@@ -140,7 +140,7 @@ class _SignUpViewState extends State<SignUpView> {
                         if (isValid != true) {
                           return;
                         } else {
-                          authProviderInstance.signUp();
+                          authProviderInstance.signUp(context);
                         }
                       },
                       childWidget: const Text(

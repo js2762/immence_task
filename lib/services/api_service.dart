@@ -6,13 +6,14 @@ class ApiService {
       UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
       User? user = userCredential.user;
       var idTokenResult = await user?.getIdTokenResult();
+      print(99999999);
+      print(idTokenResult);
       if (idTokenResult != null) {
         return true;
       } else {
         return false;
       }
     } catch (error) {
-      // print(error);
       throw error;
     }
   }
@@ -20,9 +21,11 @@ class ApiService {
   Future<bool> signUp({required String name, required String email, required String number, required String password}) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+
       User? user = userCredential.user;
       var idTokenResult = await user?.getIdTokenResult();
-      // _token = await user?.getIdToken();
+      print(idTokenResult);
+      print(272727);
       if (idTokenResult != null) {
         return true;
       } else {

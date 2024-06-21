@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:immence_task/screens/home_screens/home_view.dart';
 import 'package:immence_task/services/api_service.dart';
 
 class AuthenticationProvider with ChangeNotifier {
@@ -69,7 +71,7 @@ class AuthenticationProvider with ChangeNotifier {
     }
   }
 
-  Future<void> signUp() async {
+  Future<void> signUp(BuildContext context) async {
     try {
       bool isSignUp = await ApiService().signUp(
         name: signUpNameController.text,
@@ -79,6 +81,10 @@ class AuthenticationProvider with ChangeNotifier {
       );
       if (isSignUp) {
         clearSignUpTextControllers();
+        
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
+          return HomeView();
+        },));
       }
       notifyListeners();
     } on FirebaseAuthException catch (error) {
