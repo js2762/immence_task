@@ -74,7 +74,7 @@ class AuthenticationProvider with ChangeNotifier {
         name: signUpNameController.text,
         email: signUpEmailController.text,
         number: signUpNumberController.text,
-        password: passwordController.text,
+        password: signUpPasswordController.text,
       );
     clearSignUpTextControllers();
     } on FirebaseAuthException catch (error) {
